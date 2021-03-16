@@ -1,0 +1,103 @@
+﻿@model AlgorandCrowdfund.Controllers.RequestFundsController.ViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <h4>Campaign</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Campaign Owner
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RequestFunds.User.UserName, @Model.RequestFunds.User.AccountAddress
+        </dd>
+        <dt class="col-sm-2">
+            Campaign Title
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RequestFunds.FundTitle
+        </dd>
+        <dt class="col-sm-2">
+            Campaign Description
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RequestFunds.FundDescription
+        </dd>
+        <dt class="col-sm-2">
+            Amount Needed
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RequestFunds.AmountNeeded
+        </dd>
+        @*<dt class="col-sm-2">
+            Number of Backers
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RequestFunds.BackersCount
+        </dd>*@
+        <dt class="col-sm-2">
+            Created
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RequestFunds.Created
+        </dd>
+    </dl>
+</div>
+<h4>Backers</h4>
+@foreach (var a in Model.FundersList)
+{
+    <a>@a.User.UserName has funded @a.Amount algos to this campaign</a>
+    <br />
+}
+
+<h4>Fund this Campaign</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Funders" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Funders.Amount" class="control-label"></label>
+                <input asp-for="@Model.Funders.Amount" class="form-control" />
+                <span asp-validation-for="@Model.Funders.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label hidden asp-for="@Model.Funders.Id" class="control-label"></label>
+                <input hidden asp-for="@Model.Funders.Id" class="form-control" />
+                <span asp-validation-for="@Model.Funders.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label hidden asp-for="@Model.Funders.Receiver" class="control-label"></label>
+                <input hidden asp-for="@Model.Funders.Receiver" value="@Model.RequestFunds.User.AccountAddress" class="form-control" />
+                <span asp-validation-for="@Model.Funders.Receiver" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Funders.RequestFundsId" class="control-label"></label>
+                <input asp-for="@Model.Funders.RequestFundsId" value="@Model.RequestFunds.Id" name="@Model.RequestFunds.Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RequestFunds.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<h4>Other Campaign(s)</h4>
+
+<div>
+    @foreach (var a in Model.RequestFundsList)
+    {
+        <a>@a.FundTitle</a>
+    }
+    <a asp-action="Edit" asp-route-id="@Model.RequestFunds.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

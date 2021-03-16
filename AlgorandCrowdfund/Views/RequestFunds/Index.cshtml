@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AlgorandCrowdfund.Models.RequestFunds>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@ViewBag.Success
+
+<hr />
+Your Address: @ViewBag.UserAddr
+Your Key: @ViewBag.Key
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FundTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FundDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountNeeded)
+            </th>
+            @*<th>
+                Backers Count
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.UserName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FundTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FundDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountNeeded)
+                </td>
+                @*<td>
+                    @item.BackersCount
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
